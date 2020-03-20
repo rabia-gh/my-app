@@ -1,0 +1,17 @@
+node{
+   stage('SCM Checkout'){
+       git credentialsId: 'e220e72e-9767-4424-8015-3ecdb7beff74', url: 'https://github.com/rabia-gh/my-app.git'
+   }
+   stage('Mvn Package'){
+     def mvnHome = tool name: 'maven', type: 'maven'
+     def mvnCMD = "${mvnHome}/bin/mvn"
+     sh "${mvnCMD} clean package"
+   }
+   stage('Build Docker Image'){
+     sh 'docker build -t 196.184.129.19:8083/my-app:2.0.0 .'
+   }
+   stage('Push Docker Image'){
+     sh "docker login -u admin -p 6197 196.184.129.19:8083" 
+     sh 'docker push 196.184.129.19:8083/my-app:2.0.0'
+   }
+}
