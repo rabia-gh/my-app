@@ -16,7 +16,7 @@ node{
        sshagent(['tomcat_jenkins']) {
 			sh "${stopTomcat}"
 			sh "${copyWar}"
-			sh "${startTomcat}"
+			
 	   }
    }
 }
