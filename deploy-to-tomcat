@@ -14,7 +14,7 @@ node{
 	   sh 'mv target/myweb*.war target/myweb.war' 
 	   
        sshagent(['tomcat-dev']) {
-			sh "${stopTomcat}"
+			sh 'ssh -o StrictHostKeyChecking=no -l rabiaa 192.168.179.131 tomcat/bin/shutdown.sh'
 			sh "${copyWar}"
 			sh "${startTomcat}"
 	   }
