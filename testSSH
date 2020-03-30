@@ -3,7 +3,7 @@ node{
    def tomcatUser = 'rabiaa'
    def startTomcat = "ssh -tt ${tomcatUser}@${tomcatIp}"
    stage('Deploy Dev'){
-   sshagent(['tomcat']) {
+   sshagent(['tomcat_jenkins']) {
 			sh "${startTomcat}"
        }
      }
