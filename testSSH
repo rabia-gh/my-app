@@ -1,7 +1,7 @@
 node{
    def tomcatIp = '192.168.179.131'
    def tomcatUser = 'rabiaa'
-   def startTomcat = "ssh ${tomcatUser}@${tomcatIp} /opt/tomcat8/bin/startup.sh"
+   def startTomcat = "ssh ${tomcatUser}@${tomcatIp} /tomcat/bin/startup.sh"
    stage('Deploy Dev'){
    sshagent(['tomcat']) {
 			sh "${startTomcat}"
