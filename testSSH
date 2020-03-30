@@ -4,7 +4,6 @@ node{
    def startTomcat = "ssh -tt ${tomcatUser}@${tomcatIp}"
    stage('Deploy Dev'){
    sshagent(['tomcat_jenkins']) {
-			sh "${startTomcat}"
 			sh 'ssh -o StrictHostKeyChecking=no -l rabiaa 192.168.179.131 uname -a'
        }
      }
