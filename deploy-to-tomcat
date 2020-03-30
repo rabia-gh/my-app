@@ -1,9 +1,9 @@
 node{
    def tomcatIp = '192.168.179.131'
    def tomcatUser = 'rabiaa'
-   def stopTomcat = "ssh -o StrictHostKeyChecking=no -l ${tomcatUser} ${tomcatIp} tomcat/bin/shutdown.sh"
-   def startTomcat = "ssh -o StrictHostKeyChecking=no -l ${tomcatUser} ${tomcatIp} tomcat/bin/startup.sh"
-   def copyWar = "scp -o StrictHostKeyChecking=no target/myweb.war -l ${tomcatUser} ${tomcatIp}:tomcat/webapps/"
+   def stopTomcat = "ssh ${tomcatUser}@${tomcatIp} /opt/tomcat8/bin/shutdown.sh"
+   def startTomcat = "ssh ${tomcatUser}@${tomcatIp} /opt/tomcat8/bin/startup.sh"
+   def copyWar = "scp -o StrictHostKeyChecking=no target/myweb.war ${tomcatUser}@${tomcatIp}:/opt/tomcat8/webapps/"
    stage('Maven Build'){
      def mvnHome = tool name: 'maven', type: 'maven'
      def mvnCMD = "${mvnHome}/bin/mvn"
@@ -14,7 +14,7 @@ node{
 	   sh 'mv target/myweb*.war target/myweb.war' 
 	   
        sshagent(['tomcat_jenkins']) {
-			sh 'ssh -o StrictHostKeyChecking=no -l rabiaa 192.168.179.131 tomcat/bin/shutdown.sh'
+			sh "${stopTomcat}"
 			sh "${copyWar}"
 			sh "${startTomcat}"
 	   }
